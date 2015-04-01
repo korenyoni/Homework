@@ -77,32 +77,33 @@ public class OldProblems {
 		// (inclusive)
 	}
 	/*Recursive method that checks if list is sorted low to high*/
-	// passes by a sublist of the list, which omits the first element from the last
+	// passes by a sublist of the list, which omits the first two elements from the last
 	// call of the method
-	// passes by the last first element
-	// checks if the first element of the sublist is greater than or equal to
-	// the passed by value
-	public static boolean sortedCheck(List<Integer> array, int lastElement)
+	// checks if the first two elements are in order
+	// continues, if the list becomes three elements large, then it evalueates whether or not
+	// all three are sorted
+	public static boolean sortedCheck(List<Integer> array)
 	{
 		boolean result = false;
 		// the boolean value to return
 		// false by default, only changed if the arrayList meets the conditions
 		
-		if (array.isEmpty())
+		if (array.size() < 2)
 		{
-			return true; // if the sublist is empty, return the boolean value
+			return true; // if the sublist is empty or has one element, return the boolean value
 		}
-		int element = array.get(0);
-		if (element >= lastElement)
-			// is the current first element greater than or equal to
-			// the passed by value i.e. the last first element
+		int currElement = array.get(0);
+		int nextElement = array.get(1);
+		if (currElement <= nextElement) result = true;
+		if (array.size() < 4 && array.size() % 2 != 0) // if there is only one more element after currElement and nextElement
+			// then the list is only sorted if the last element is bigger than the other two
 		{
-			result = true; // return true if it is
+			int lastElement = array.get(2);
+			result = nextElement < lastElement;
 		}
 		
-		return result && sortedCheck(array.subList(1, array.size()), element);
-		// recursive call using a sublist that omits the first element
-		// passes by the element omitted
+		return result && sortedCheck(array.subList(2, array.size()));
+		// recursive call using a sublist that omits the first two elements
 	}
 	/*Recursive that checks the following rules*/
 	// string begins with 'a'
